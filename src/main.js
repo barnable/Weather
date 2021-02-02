@@ -42,26 +42,26 @@ const onEnterSubmit = event =>{
         getWeatherByCity(query).then(data=>{
             displayWeatherData(data);
         });
-
     }
 };
+
 const onClickSubmit = () =>{
     let query = viewElems.searchInput.value;
     getWeatherByCity(query).then(data=>{
     displayWeatherData(data);
     });
 };
+
 const displayWeatherData = data =>{
     switchView();
     fadeInOut();
-    console.log(data);
     const weather = data.consolidated_weather[0];
     const city = data.title;
     const icon =`https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`;
     const currTemp = weather.the_temp.toFixed(1);
     const maxTemp = weather.max_temp.toFixed(1);
     const minTemp = weather.min_temp.toFixed(1);
-    
+
     viewElems.weatherCity.innerText = city;
     viewElems.weatherIcon.src= icon; 
     viewElems.weatherIcon.alt = weather.weather_state_name;
@@ -96,8 +96,5 @@ const returnToSearch = () =>{
         fadeInOut();}, 500)
         viewElems.searchInput.value='';
     }
-
-
-    
 
     document.addEventListener('DOMContentLoaded', initializeApp)

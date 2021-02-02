@@ -9,4 +9,3 @@ export const getWeatherByCity= (city) =>{
         .then(data=>data)
     });
 }
-

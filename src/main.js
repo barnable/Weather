@@ -24,6 +24,11 @@ class WeatherApp{
                 let query = this.viewElems.searchInput.value;
                 getWeatherByCity(query).then(data=>{
                 this.displayWeatherData(data);
+                this.viewElems.searchInput.style.borderColor='black';
+                }).catch(() => {
+                    this.viewElems.error.style.color = 'red';
+                    this.viewElems.error.innerText = 'Wpisz prawidłową nazwę miasta!';
+                    this.viewElems.searchInput.style.borderColor='red';
                 });
             }
 
@@ -46,15 +51,16 @@ class WeatherApp{
             this.viewElems.weatherForecastView.style.display = 'none';
         }
     }
-
+    
     returnToSearch = () =>{
         this.fadeInOut();
         setTimeout(() =>{
             this.switchView();
             this.fadeInOut();}, 500)
             this.viewElems.searchInput.value='';
+            this.viewElems.error.innerText = '';
         }
-
+        
         displayWeatherData = data =>{
             this.switchView();
             this.fadeInOut();
@@ -74,53 +80,5 @@ class WeatherApp{
             this.fadeInOut();
         }
     }
-
-
-// const viewElems = {};
-
-// const getDOMElem = id => {
-//     return document.getElementById(id);
-// }
-
-// const connectHTMLelems = () => {
-//     viewElems.mainContainer = getDOMElem('mainContainer');
-//     viewElems.weatherSearchView = getDOMElem('weatherSearchView');
-//     viewElems.weatherForecastView = getDOMElem('weatherForecastView');
-    
-//     viewElems.searchInput = getDOMElem('searchInput');
-//     viewElems.searchButton = getDOMElem('searchButton');
-//     viewElems.weatherCityContainer = getDOMElem('weatherCityContainer');
-
-//     viewElems.weatherCity= getDOMElem('weatherCity');
-//     viewElems.weatherIcon = getDOMElem('weatherIcon');
-
-//     viewElems.weatherCurrentTemp = getDOMElem('weatherCurrentTemp');
-//     viewElems.weatherMaxTemp = getDOMElem('weatherMaxTemp');
-//     viewElems.weatherMinTemp = getDOMElem('weatherMinTemp');
-
-//     viewElems.returnToSearchButton = getDOMElem('returnToSearchBtn');
-// }
-
-// const setupListeners= () =>{
-//     viewElems.searchInput.addEventListener('keydown', onEnterSubmit);
-//     viewElems.searchButton.addEventListener('click', onClickSubmit);
-//     viewElems.returnToSearchButton.addEventListener('click', returnToSearch);
-// }
-
-// const initializeApp = () =>{
-//     connectHTMLelems();
-//     setupListeners();
-// }
-
-// const onEnterSubmit = event =>{
-    
-// };
-
-// const onClickSubmit = () =>{
-//     let query = viewElems.searchInput.value;
-//     getWeatherByCity(query).then(data=>{
-//     displayWeatherData(data);
-//     });
-// };
 
     document.addEventListener('DOMContentLoaded', new WeatherApp())

@@ -32,7 +32,8 @@ body {
   }
 
   .weather-info img{
-    max-width: 30%;
+    width: 25%;
+    max-width:130px;
   }
   
   .weather-info__search-view {

@@ -35,7 +35,7 @@ body {
     width: 25%;
     max-width:130px;
   }
-  
+
   .weather-info__search-view {
     display: flex;
     flex-direction: column;

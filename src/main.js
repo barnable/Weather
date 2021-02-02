@@ -22,12 +22,13 @@ const connectHTMLelems = () => {
     viewElems.weatherMaxTemp = getDOMElem('weatherMaxTemp');
     viewElems.weatherMinTemp = getDOMElem('weatherMinTemp');
 
-    viewElems.returnToSearchButton = getDOMElem('returnToSearchButton');
+    viewElems.returnToSearchButton = getDOMElem('returnToSearchBtn');
 }
 
 const setupListeners= () =>{
     viewElems.searchInput.addEventListener('keydown', onEnterSubmit);
     viewElems.searchButton.addEventListener('click', onClickSubmit);
+    viewElems.returnToSearchButton.addEventListener('click', returnToSearch);
 }
 
 const initializeApp = () =>{
@@ -36,13 +37,48 @@ const initializeApp = () =>{
 }
 
 const onEnterSubmit = event =>{
-    console.log(event);
     if(event.key === 'Enter'){
-        console.log(event);
+        fadeInOut();
         let query = viewElems.searchInput.value;
-        getWeatherByCity(query).then(data=>{console.log(data);});
+        getWeatherByCity(query).then(data=>{console.log(data);
+        switchView();
+        fadeInOut();
+        });
+
     }
 };
-const onClickSubmit = () =>{};
+const onClickSubmit = () =>{
+    fadeInOut();
+    let query = viewElems.searchInput.value;
+    getWeatherByCity(query).then(data=>{console.log(data);
+    switchView();
+    fadeInOut();
+    });
+};
+
+const fadeInOut = () =>{
+    if (viewElems.mainContainer.style.opacity ==='1' || viewElems.mainContainer.style.opacity === '' ){
+        viewElems.mainContainer.style.opacity ='0';
+    }else {
+        viewElems.mainContainer.style.opacity ='1';
+    }
+}
+
+const switchView = () => {
+    if(viewElems.weatherSearchView.style.display!=='none'){
+        viewElems.weatherSearchView.style.display= 'none';
+        viewElems.weatherForecastView.style.display = 'initial';
+    }else{
+        viewElems.weatherSearchView.style.display= 'flex';
+        viewElems.weatherForecastView.style.display = 'none';
+    }
+}
+
+const returnToSearch = () =>{
+    fadeInOut();
+    setTimeout(() =>{
+        switchView();
+        fadeInOut();}, 500)
+    }
 
 document.addEventListener('DOMContentLoaded', initializeApp)

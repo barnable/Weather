@@ -30,6 +30,10 @@ body {
     transition-duration: .5s;
     transition-property: opacity;
   }
+
+  .weather-info img{
+    max-width: 130px;
+  }
   
   .weather-info__search-view {
     display: flex;

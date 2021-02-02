@@ -38,23 +38,38 @@ const initializeApp = () =>{
 
 const onEnterSubmit = event =>{
     if(event.key === 'Enter'){
-        fadeInOut();
         let query = viewElems.searchInput.value;
-        getWeatherByCity(query).then(data=>{console.log(data);
-        switchView();
-        fadeInOut();
+        getWeatherByCity(query).then(data=>{
+            displayWeatherData(data);
         });
-
     }
 };
+
 const onClickSubmit = () =>{
-    fadeInOut();
     let query = viewElems.searchInput.value;
-    getWeatherByCity(query).then(data=>{console.log(data);
-    switchView();
-    fadeInOut();
+    getWeatherByCity(query).then(data=>{
+    displayWeatherData(data);
     });
 };
+
+const displayWeatherData = data =>{
+    switchView();
+    fadeInOut();
+    const weather = data.consolidated_weather[0];
+    const city = data.title;
+    const icon =`https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`;
+    const currTemp = weather.the_temp.toFixed(1);
+    const maxTemp = weather.max_temp.toFixed(1);
+    const minTemp = weather.min_temp.toFixed(1);
+
+    viewElems.weatherCity.innerText = city;
+    viewElems.weatherIcon.src= icon; 
+    viewElems.weatherIcon.alt = weather.weather_state_name;
+    viewElems.weatherCurrentTemp.innerText = `Aktualna temperatura to: ${currTemp}℃`;
+    viewElems.weatherMaxTemp.innerText = `Maksymalna temperatura może wynieść: ${maxTemp}℃`;
+    viewElems.weatherMinTemp.innerText= `Minimalna temperatura: ${minTemp}℃`;
+fadeInOut();
+}
 
 const fadeInOut = () =>{
     if (viewElems.mainContainer.style.opacity ==='1' || viewElems.mainContainer.style.opacity === '' ){
@@ -79,6 +94,7 @@ const returnToSearch = () =>{
     setTimeout(() =>{
         switchView();
         fadeInOut();}, 500)
+        viewElems.searchInput.value='';
     }
 
-document.addEventListener('DOMContentLoaded', initializeApp)
+    document.addEventListener('DOMContentLoaded', initializeApp)
